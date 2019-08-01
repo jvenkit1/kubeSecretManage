@@ -16,7 +16,8 @@ limitations under the License.
 package cmd
 
 import (
-	"fmt"
+	"github.com/sirupsen/logrus"
+	"kubeSecretManage/services"
 
 	"github.com/spf13/cobra"
 )
@@ -24,15 +25,16 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Lists secrets from a namespace",
+	Long: `Lists secrets from the specified namespace. For example :
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Simply calling the list function should return all secrets
+Calling list function along with the secret name should return data on the specified secret`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called")
+		err := services.ListSecret(ns, secretName)
+		if err != nil {
+			logrus.WithError(err).Fatal("Error retrieving secrets")
+		}
 	},
 }
 

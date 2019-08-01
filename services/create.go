@@ -1,11 +1,10 @@
 package services
 
 import (
+	"github.com/sirupsen/logrus"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
-	"github.com/sirupsen/logrus"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 var clientset *kubernetes.Clientset
@@ -40,17 +39,5 @@ func CreateSecret(ns, key, data, name string) error {
 		logrus.WithError(err).Error("Error creating secret")
 		return err
 	}
-	return nil
-}
-
-func ListSecret(ns, name string) error {
-	secret, err := clientset.CoreV1().Secrets(ns).Get(name, metav1.GetOptions{})
-	if err != nil {
-		logrus.WithError(err).Error("Error retrieving secrets")
-		return err
-	}
-	logrus.WithFields(logrus.Fields{
-		"data": secret.Data,
-	}).Info("Printing data")
 	return nil
 }
