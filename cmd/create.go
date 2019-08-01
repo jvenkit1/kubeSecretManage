@@ -27,8 +27,7 @@ var createCmd = &cobra.Command{
 	Short: "creates a kubernetes secret",
 	Long: `creates kubernetes secrets in the namespace specified. Requires value of the secret as an argument`,
 	Run: func(cmd *cobra.Command, args []string) {
-		//fmt.Printf("ns->%s\ndata->%s", ns, data)
-		err := services.CreateSecret(ns, "testKey", data, "testName")
+		err := services.CreateSecret(ns, key, data, secretName)
 		if err != nil {
 			logrus.WithError(err).Fatal("Error performing create secret action")
 		}

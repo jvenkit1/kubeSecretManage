@@ -48,7 +48,7 @@ func Execute() {
   }
 }
 
-var ns, data string
+var ns, data, key, secretName string
 
 func init() {
   cobra.OnInitialize(initConfig)
@@ -59,6 +59,8 @@ func init() {
 
   rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.kubeSecretManage.yaml)")
   rootCmd.PersistentFlags().StringVar(&ns, "namespace", "default", "Namespace where secret is to be stored")
+  rootCmd.PersistentFlags().StringVar(&secretName, "name","","Name of the secret")
+  rootCmd.PersistentFlags().StringVar(&key, "key","","Key for the secret")
   rootCmd.PersistentFlags().StringVar(&data, "data", "", "Data to be stored as a secret")
 
   // Cobra also supports local flags, which will only run
